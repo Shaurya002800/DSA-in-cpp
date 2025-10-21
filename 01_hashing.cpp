@@ -1,29 +1,29 @@
-#include <iostream>
-using namespace std;
+// #include <iostream>
+// using namespace std;
 
-int main(){
-    int n;
-    cout << "enter size of array: ";
-    cin >> n;
-    int arr[n];
-    for(int i = 0; i < n; i++){
-        cin >> arr[i];
-    }
-    int has[13] = {0};
-    for(int i = 0; i < n; i++){
-        has[arr[i]]++;
-    }
-    int q ;
-    cout << "enter number of search: ";
-    cin >> q;
-    for(int i = 0; i < q; i++){
-        int s;
-    cout << "enter a number to know the frequency: ";
-        cin >> s;
-        cout << s <<" came "<<has[s] << " times in the array"<<endl;
-        // cout << has[i]<<" ";
-    }
-}
+// int main(){
+//     int n;
+//     cout << "enter size of array: ";
+//     cin >> n;
+//     int arr[n];
+//     for(int i = 0; i < n; i++){
+//         cin >> arr[i];
+//     }
+//     int has[13] = {0};
+//     for(int i = 0; i < n; i++){
+//         has[arr[i]]++;
+//     }
+//     int q ;
+//     cout << "enter number of search: ";
+//     cin >> q;
+//     for(int i = 0; i < q; i++){
+//         int s;
+//     cout << "enter a number to know the frequency: ";
+//         cin >> s;
+//         cout << s <<" came "<<has[s] << " times in the array"<<endl;
+//         // cout << has[i]<<" ";
+//     }
+// }
 
 
 

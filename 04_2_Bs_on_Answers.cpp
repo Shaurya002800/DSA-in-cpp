@@ -91,44 +91,44 @@
 
 // Optimal Solution
 
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 
-// Function to calculate v^n using integer multiplication
-long long power(int v, int n) {
-    long long res = 1;
-    for (int i = 0; i < n; i++) {
-        res *= v;
-        if (res > 1e18) break; // prevent overflow
-    }
-    return res;
-}
+// // Function to calculate v^n using integer multiplication
+// long long power(int v, int n) {
+//     long long res = 1;
+//     for (int i = 0; i < n; i++) {
+//         res *= v;
+//         if (res > 1e18) break; // prevent overflow
+//     }
+//     return res;
+// }
 
-// Function to find the nth root of m
-int nthRoot(int m, int n) {
-    int low = 1, high = m;
+// // Function to find the nth root of m
+// int nthRoot(int m, int n) {
+//     int low = 1, high = m;
 
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-        long long val = power(mid, n);
+//     while (low <= high) {
+//         int mid = low + (high - low) / 2;
+//         long long val = power(mid, n);
 
-        if (val == m) return mid;
-        else if (val < m) low = mid + 1;
-        else high = mid - 1;
-    }
+//         if (val == m) return mid;
+//         else if (val < m) low = mid + 1;
+//         else high = mid - 1;
+//     }
 
-    return -1; // No integer root found
-}
+//     return -1; // No integer root found
+// }
 
-int main() {
-    int m = 25;
-    int n = 2;
+// int main() {
+//     int m = 25;
+//     int n = 2;
 
-    int result = nthRoot(m, n);
-    cout << result << endl;
+//     int result = nthRoot(m, n);
+//     cout << result << endl;
 
-    return 0;
-}
+//     return 0;
+// }
 
 
 // #include <bits/stdc++.h>
@@ -159,3 +159,117 @@ int main() {
 //     cout << -1 << endl;
 //     return 0;
 // }
+
+
+
+
+
+
+//koko eating bananas
+
+//what i tried
+
+
+#include <bits/stdc++.h>
+int furthest_div(int a, int b) {
+    if (b == 0) {
+        cout << "Error: Division by zero!" << endl;
+        return 0;
+    }
+
+    int quotient = a / b;
+    int remainder = a % b;
+
+    if (remainder != 0) {
+        if ((a > 0 && b > 0) || (a < 0 && b < 0))
+            quotient += 1; 
+        else
+            quotient -= 1; 
+    }
+
+    return quotient;
+}
+
+
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int n = INT_MIN;
+        for(auto it : piles){
+            n = max(n, it);
+        }
+        int left = 1;
+        int right = n;
+        int mid;
+        int minn;
+        while(left <= right){
+            mid = (left + right) / 2;
+            int see = 0;
+            for(auto it : piles){
+                see = see + furthest_div(it, mid);
+                // cout << it << " / " << mid << " = " << floor(it / mid) << endl;
+            }
+            if(see == h){
+                break;
+            }
+            if(see < h){
+                right = mid - 1; 
+            }
+            if(see > h){
+                left = mid + 1;
+            }
+        }
+        return mid;
+    }
+};
+
+
+
+
+// and this is the correct answer
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Furthest division (always round up for positive integers)
+int furthest_div(int a, int b) {
+    // Avoid division by zero
+    if (b == 0) {
+        cout << "Error: Division by zero!" << endl;
+        return 0;
+    }
+    return (a + b - 1) / b;  // simple ceil division for positives
+}
+
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int n = INT_MIN;
+        for (auto it : piles) {
+            n = max(n, it);
+        }
+
+        int left = 1, right = n;
+        int ans = n;  // start with max possible
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            long long totalHours = 0;
+
+            for (auto it : piles) {
+                totalHours += furthest_div(it, mid);
+            }
+
+            if (totalHours <= h) {
+                ans = mid;         // mid works, try smaller speed
+                right = mid - 1;
+            } else {
+                left = mid + 1;    // too slow, need higher speed
+            }
+        }
+
+        return ans;
+    }
+};
+ 
