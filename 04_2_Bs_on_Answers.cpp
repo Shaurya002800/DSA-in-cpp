@@ -273,3 +273,94 @@ public:
     }
 };
  
+
+
+
+
+
+//Minimum Number of Days to Make m Bouquets
+
+// what i tried
+// #include <bits/stdc++.h>
+// class Solution {
+// public:
+//     int minDays(vector<int>& bloomDay, int m, int k) {
+//         int n = bloomDay.size();
+//         if(n < (m * k)){
+//             return -1;
+//         }
+//         int see;
+//         int pp = m;
+//         unordered_map<int, int> mapp;
+//         for(int i = 0; i < n; i++){
+//             int j = i;
+//             while(j > 0 && bloomDay[j] > bloomDay[j - 1]){
+//                 swap(bloomDay[j], bloomDay[j -1]);
+//                 j--;
+//             }
+//         }
+//         for(auto it : bloomDay){
+//             mapp[it]++;
+//         }
+//         for(auto it : mapp){
+//             cout << it.first << " " << it.second << endl; 
+//         }
+//         for(auto it : mapp){
+//             while(it.second != 0 && it.second >= k){
+//                 see = it.first;
+//                 it.second -= k;
+//                 pp--;
+//                 if(pp == 0){
+//                     return see;
+//                 }
+//             }
+//         }
+//         return see;
+//     }
+// };
+
+
+
+//optimal solution(after watching video)               TM O(log(max(arr[])-min(arr[])+1) * N)   SM o(1)
+
+#include <bits/stdc++.h>
+bool possible(vector<int> &arr, int day, int m, int k) {
+    int n = arr.size(); 
+    int cnt = 0;
+    int noOfB = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] <= day) {
+            cnt++;
+        }
+        else {
+            noOfB += (cnt / k);
+            cnt = 0;
+        }
+    }
+    noOfB += (cnt / k);
+    return noOfB >= m;
+}
+
+class Solution {
+public:
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        long long val = m * 1ll * k * 1ll;
+        int n = bloomDay.size(); 
+        if (val > n) return -1; 
+        int mini = INT_MAX, maxi = INT_MIN;
+        for (int i = 0; i < n; i++) {
+            mini = min(mini, bloomDay[i]);
+            maxi = max(maxi, bloomDay[i]);
+        }
+
+        int low = mini, high = maxi;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (possible(bloomDay, mid, m, k)) {
+                high = mid - 1;
+            }
+            else low = mid + 1;
+        }
+        return low;
+    }
+};
