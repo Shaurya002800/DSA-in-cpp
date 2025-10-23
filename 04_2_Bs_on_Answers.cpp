@@ -323,44 +323,92 @@ public:
 
 //optimal solution(after watching video)               TM O(log(max(arr[])-min(arr[])+1) * N)   SM o(1)
 
+// #include <bits/stdc++.h>
+// bool possible(vector<int> &arr, int day, int m, int k) {
+//     int n = arr.size(); 
+//     int cnt = 0;
+//     int noOfB = 0;
+//     for (int i = 0; i < n; i++) {
+//         if (arr[i] <= day) {
+//             cnt++;
+//         }
+//         else {
+//             noOfB += (cnt / k);
+//             cnt = 0;
+//         }
+//     }
+//     noOfB += (cnt / k);
+//     return noOfB >= m;
+// }
+
+// class Solution {
+// public:
+//     int minDays(vector<int>& bloomDay, int m, int k) {
+//         long long val = m * 1ll * k * 1ll;
+//         int n = bloomDay.size(); 
+//         if (val > n) return -1; 
+//         int mini = INT_MAX, maxi = INT_MIN;
+//         for (int i = 0; i < n; i++) {
+//             mini = min(mini, bloomDay[i]);
+//             maxi = max(maxi, bloomDay[i]);
+//         }
+
+//         int low = mini, high = maxi;
+//         while (low <= high) {
+//             int mid = (low + high) / 2;
+//             if (possible(bloomDay, mid, m, k)) {
+//                 high = mid - 1;
+//             }
+//             else low = mid + 1;
+//         }
+//         return low;
+//     }
+// };
+
+
+
+
+//Finding the smallest divisor
+
+
+//what i tried and its correct also and optimal
+
 #include <bits/stdc++.h>
-bool possible(vector<int> &arr, int day, int m, int k) {
-    int n = arr.size(); 
-    int cnt = 0;
-    int noOfB = 0;
-    for (int i = 0; i < n; i++) {
-        if (arr[i] <= day) {
-            cnt++;
-        }
-        else {
-            noOfB += (cnt / k);
-            cnt = 0;
-        }
+
+int bigger(int a, int b){
+    if(a % b == 0){
+        return a/b;
     }
-    noOfB += (cnt / k);
-    return noOfB >= m;
+    else {
+        return a/b + 1;
+    }
 }
 
 class Solution {
 public:
-    int minDays(vector<int>& bloomDay, int m, int k) {
-        long long val = m * 1ll * k * 1ll;
-        int n = bloomDay.size(); 
-        if (val > n) return -1; 
-        int mini = INT_MAX, maxi = INT_MIN;
-        for (int i = 0; i < n; i++) {
-            mini = min(mini, bloomDay[i]);
-            maxi = max(maxi, bloomDay[i]);
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        int maxx = INT_MIN;
+        for(auto it : nums){
+            maxx = max(maxx, it);
         }
-
-        int low = mini, high = maxi;
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            if (possible(bloomDay, mid, m, k)) {
-                high = mid - 1;
+        int left = 1;
+        int right = maxx;
+        int mid;
+        int see = maxx;
+        while(left <= right){
+            mid = left + (right - left) / 2;
+            int summ = 0;
+            for(auto it : nums){
+                summ += bigger(it, mid);
             }
-            else low = mid + 1;
+            if(summ > threshold){
+                left = mid + 1;
+            }
+            if(summ <= threshold){
+                right = mid - 1;
+                see = min(see, mid);
+            }
         }
-        return low;
+        return see;
     }
 };
