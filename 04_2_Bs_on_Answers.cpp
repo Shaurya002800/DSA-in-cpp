@@ -170,58 +170,58 @@
 //what i tried
 
 
-#include <bits/stdc++.h>
-int furthest_div(int a, int b) {
-    if (b == 0) {
-        cout << "Error: Division by zero!" << endl;
-        return 0;
-    }
+// #include <bits/stdc++.h>
+// int furthest_div(int a, int b) {
+//     if (b == 0) {
+//         cout << "Error: Division by zero!" << endl;
+//         return 0;
+//     }
 
-    int quotient = a / b;
-    int remainder = a % b;
+//     int quotient = a / b;
+//     int remainder = a % b;
 
-    if (remainder != 0) {
-        if ((a > 0 && b > 0) || (a < 0 && b < 0))
-            quotient += 1; 
-        else
-            quotient -= 1; 
-    }
+//     if (remainder != 0) {
+//         if ((a > 0 && b > 0) || (a < 0 && b < 0))
+//             quotient += 1; 
+//         else
+//             quotient -= 1; 
+//     }
 
-    return quotient;
-}
+//     return quotient;
+// }
 
 
-class Solution {
-public:
-    int minEatingSpeed(vector<int>& piles, int h) {
-        int n = INT_MIN;
-        for(auto it : piles){
-            n = max(n, it);
-        }
-        int left = 1;
-        int right = n;
-        int mid;
-        int minn;
-        while(left <= right){
-            mid = (left + right) / 2;
-            int see = 0;
-            for(auto it : piles){
-                see = see + furthest_div(it, mid);
-                // cout << it << " / " << mid << " = " << floor(it / mid) << endl;
-            }
-            if(see == h){
-                break;
-            }
-            if(see < h){
-                right = mid - 1; 
-            }
-            if(see > h){
-                left = mid + 1;
-            }
-        }
-        return mid;
-    }
-};
+// class Solution {
+// public:
+//     int minEatingSpeed(vector<int>& piles, int h) {
+//         int n = INT_MIN;
+//         for(auto it : piles){
+//             n = max(n, it);
+//         }
+//         int left = 1;
+//         int right = n;
+//         int mid;
+//         int minn;
+//         while(left <= right){
+//             mid = (left + right) / 2;
+//             int see = 0;
+//             for(auto it : piles){
+//                 see = see + furthest_div(it, mid);
+//                 // cout << it << " / " << mid << " = " << floor(it / mid) << endl;
+//             }
+//             if(see == h){
+//                 break;
+//             }
+//             if(see < h){
+//                 right = mid - 1; 
+//             }
+//             if(see > h){
+//                 left = mid + 1;
+//             }
+//         }
+//         return mid;
+//     }
+// };
 
 
 
@@ -229,49 +229,49 @@ public:
 // and this is the correct answer
 
 
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 
-// Furthest division (always round up for positive integers)
-int furthest_div(int a, int b) {
-    // Avoid division by zero
-    if (b == 0) {
-        cout << "Error: Division by zero!" << endl;
-        return 0;
-    }
-    return (a + b - 1) / b;  // simple ceil division for positives
-}
+// // Furthest division (always round up for positive integers)
+// int furthest_div(int a, int b) {
+//     // Avoid division by zero
+//     if (b == 0) {
+//         cout << "Error: Division by zero!" << endl;
+//         return 0;
+//     }
+//     return (a + b - 1) / b;  // simple ceil division for positives
+// }
 
-class Solution {
-public:
-    int minEatingSpeed(vector<int>& piles, int h) {
-        int n = INT_MIN;
-        for (auto it : piles) {
-            n = max(n, it);
-        }
+// class Solution {
+// public:
+//     int minEatingSpeed(vector<int>& piles, int h) {
+//         int n = INT_MIN;
+//         for (auto it : piles) {
+//             n = max(n, it);
+//         }
 
-        int left = 1, right = n;
-        int ans = n;  // start with max possible
+//         int left = 1, right = n;
+//         int ans = n;  // start with max possible
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            long long totalHours = 0;
+//         while (left <= right) {
+//             int mid = left + (right - left) / 2;
+//             long long totalHours = 0;
 
-            for (auto it : piles) {
-                totalHours += furthest_div(it, mid);
-            }
+//             for (auto it : piles) {
+//                 totalHours += furthest_div(it, mid);
+//             }
 
-            if (totalHours <= h) {
-                ans = mid;         // mid works, try smaller speed
-                right = mid - 1;
-            } else {
-                left = mid + 1;    // too slow, need higher speed
-            }
-        }
+//             if (totalHours <= h) {
+//                 ans = mid;         // mid works, try smaller speed
+//                 right = mid - 1;
+//             } else {
+//                 left = mid + 1;    // too slow, need higher speed
+//             }
+//         }
 
-        return ans;
-    }
-};
+//         return ans;
+//     }
+// };
  
 
 
@@ -373,42 +373,101 @@ public:
 
 //what i tried and its correct also and optimal
 
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 
-int bigger(int a, int b){
-    if(a % b == 0){
-        return a/b;
+// int bigger(int a, int b){
+//     if(a % b == 0){
+//         return a/b;
+//     }
+//     else {
+//         return a/b + 1;
+//     }
+// }
+
+// class Solution {
+// public:
+//     int smallestDivisor(vector<int>& nums, int threshold) {
+//         int maxx = INT_MIN;
+//         for(auto it : nums){
+//             maxx = max(maxx, it);
+//         }
+//         int left = 1;
+//         int right = maxx;
+//         int mid;
+//         int see = maxx;
+//         while(left <= right){
+//             mid = left + (right - left) / 2;
+//             int summ = 0;
+//             for(auto it : nums){
+//                 summ += bigger(it, mid);
+//             }
+//             if(summ > threshold){
+//                 left = mid + 1;
+//             }
+//             if(summ <= threshold){
+//                 right = mid - 1;
+//                 see = min(see, mid);
+//             }
+//         }
+//         return see;
+//     }
+// };
+
+
+
+
+
+// Kth Missing Positive Number
+
+
+// what i tried
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int missingK(vector < int > vec, int n, int k) {
+    for (int i = 0; i < n; i++) {
+        if (vec[i] <= k) k++; //shifting k
+        else break;
     }
-    else {
-        return a/b + 1;
-    }
+    return k;
 }
 
-class Solution {
-public:
-    int smallestDivisor(vector<int>& nums, int threshold) {
-        int maxx = INT_MIN;
-        for(auto it : nums){
-            maxx = max(maxx, it);
+
+int main()
+{
+    vector<int> vec = {4, 7, 9, 10};
+    int n = 4, k = 4;
+    int ans = missingK(vec, n, k);
+    cout << "The missing number is: " << ans << "\n";
+    return 0;
+}
+
+
+// Optimal solution       TM o(logn)
+
+
+int missingK(vector < int > vec, int n, int k) {
+    int low = 0, high = n - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        int missing = vec[mid] - (mid + 1);
+        if (missing < k) {
+            low = mid + 1;
         }
-        int left = 1;
-        int right = maxx;
-        int mid;
-        int see = maxx;
-        while(left <= right){
-            mid = left + (right - left) / 2;
-            int summ = 0;
-            for(auto it : nums){
-                summ += bigger(it, mid);
-            }
-            if(summ > threshold){
-                left = mid + 1;
-            }
-            if(summ <= threshold){
-                right = mid - 1;
-                see = min(see, mid);
-            }
+        else {
+            high = mid - 1;
         }
-        return see;
     }
-};
+    return k + high + 1;
+}
+
+int main()
+{
+    vector<int> vec = {4, 7, 9, 10};
+    int n = 4, k = 4;
+    int ans = missingK(vec, n, k);
+    cout << "The missing number is: " << ans << "\n";
+    return 0;
+}
