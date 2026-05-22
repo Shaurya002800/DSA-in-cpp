@@ -35,7 +35,7 @@
 //                 freq[cmax]--;
 //             }
 //         }
-=//         return new String(str);
+//         return new String(str);
 //     }
 // }
 
@@ -71,28 +71,84 @@
 
 
 
+// class Solution {
+//     public int romanToInt(String s) {
+//         int ans = 0;
+//         for(int i = 0; i < s.length(); i++) {
+//             int curr = value(s.charAt(i));
+//             if(i < s.length() - 1 &&
+//                curr < value(s.charAt(i + 1))) {
+//                 ans -= curr;
+//             }
+//             else {
+//                 ans += curr;
+//             }
+//         }
+//         return ans;
+//     }
+//     public int value(char ch) {
+//         if(ch == 'I') return 1;
+//         if(ch == 'V') return 5;
+//         if(ch == 'X') return 10;
+//         if(ch == 'L') return 50;
+//         if(ch == 'C') return 100;
+//         if(ch == 'D') return 500;
+//         return 1000;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+// String to Integer
+
+// Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.
+
+// The algorithm for myAtoi(string s) is as follows:
+
+// Whitespace: Ignore any leading whitespace (" ").
+// Signedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.
+// Conversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.
+// Rounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231, and integers greater than 231 - 1 should be rounded to 231 - 1.
+// Return the integer as the final result.
+
+
+
 class Solution {
-    public int romanToInt(String s) {
-        int ans = 0;
-        for(int i = 0; i < s.length(); i++) {
-            int curr = value(s.charAt(i));
-            if(i < s.length() - 1 &&
-               curr < value(s.charAt(i + 1))) {
-                ans -= curr;
-            }
-            else {
-                ans += curr;
-            }
+    public int myAtoi(String s) {
+        int i = 0;
+        int n = s.length();
+        // 1. Skip leading spaces
+        while(i < n && s.charAt(i) == ' ') {
+            i++;
         }
-        return ans;
-    }
-    public int value(char ch) {
-        if(ch == 'I') return 1;
-        if(ch == 'V') return 5;
-        if(ch == 'X') return 10;
-        if(ch == 'L') return 50;
-        if(ch == 'C') return 100;
-        if(ch == 'D') return 500;
-        return 1000;
+        // 2. Check sign
+        int sign = 1;
+        if(i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
+            if(s.charAt(i) == '-') {
+                sign = -1;
+            }
+            i++;
+        }
+        // 3. Build number
+        long num = 0;
+        while(i < n && Character.isDigit(s.charAt(i))) {
+            num = num * 10 + (s.charAt(i) - '0');
+            // 4. Handle overflow
+            if(sign * num > Integer.MAX_VALUE) {
+                return Integer.MAX_VALUE;
+            }
+            if(sign * num < Integer.MIN_VALUE) {
+                return Integer.MIN_VALUE;
+            }
+            i++;
+        }
+        return (int)(sign * num);
     }
 }
