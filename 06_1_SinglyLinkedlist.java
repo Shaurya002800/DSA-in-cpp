@@ -34,9 +34,95 @@
  *     ListNode(int x) { val = x; }
  * }
  */
+// class Solution {
+//     public void deleteNode(ListNode node) {
+//         node.val = node.next.val;
+//         node.next = node.next.next;
+//     }
+// }
+
+
+
+
+//REVERSE THE LINK LIST
+// Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+// Example 1:
+// Input: head = [1,2,3,4,5]
+// Output: [5,4,3,2,1]
+
+// Example 2:
+// Input: head = [1,2]
+// Output: [2,1]
+
+// Example 3:
+// Input: head = []
+// Output: []
+
+
+
+//MY SOLUTION
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+// import java.util.*;
+// class Solution {
+//     public ListNode reverseList(ListNode head) {
+//         ListNode temp = head;
+//         ListNode see = head;
+//         Vector<Integer> yo = new Vector<>();
+//         int i = 0;
+//         while(temp != null){
+//             yo.add(temp.val);
+//             i++;
+//             temp = temp.next;
+//         }
+//         // Collections.reverse(yo);
+//         while(i > 0){
+//             i--;
+//             see.val = yo.get(i);
+//             see = see.next;
+//         }
+//         see = head;
+//         return see;
+//     }
+// }
+
+
+// OPTIMIZED
+
+/**
+ * Definition for singly-linked list.
+ */
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
 class Solution {
-    public void deleteNode(ListNode node) {
-        node.val = node.next.val;
-        node.next = node.next.next;
+    public ListNode reverseList(ListNode head) {
+        
+        ListNode prev = null;
+        ListNode curr = head;
+
+        while (curr != null) {
+            ListNode nextTemp = curr.next; // store next node
+            curr.next = prev;              // reverse link
+            prev = curr;                   // move prev
+            curr = nextTemp;               // move curr
+        }
+
+        return prev;
     }
+
 }
