@@ -158,18 +158,68 @@ class ListNode {
 // Tortoise and Hare Algorithm
 
 
-public class 06_1_singlyLL {
-    public boolean hasCycle(ListNode head) {
+// public class 06_1_singlyLL {
+//     public boolean hasCycle(ListNode head) {
+//         ListNode slow = head;
+//         ListNode fast = head;
+//         while(fast != null && fast.next != null) {
+//             slow = slow.next;
+//             fast = fast.next.next;
+//             // cycle detected
+//             if(slow == fast) {
+//                 return true;
+//             }
+//         }
+//         return false;
+//     }
+// }
+
+
+
+
+
+
+
+//PALINDROME LINKED LIST
+// Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+
+
+// Example 1:
+// Input: head = [1,2,2,1]
+// Output: true
+
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null){
+            return true;
+        }
         ListNode slow = head;
         ListNode fast = head;
-        while(fast != null && fast.next != null) {
+        // Find middle
+        while(fast != null && fast.next != null){
             slow = slow.next;
             fast = fast.next.next;
-            // cycle detected
-            if(slow == fast) {
-                return true;
-            }
         }
-        return false;
+        // Reverse second half
+        ListNode prev = null;
+        ListNode curr = slow;
+        while(curr != null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        // Compare both halves
+        ListNode first = head;
+        ListNode second = prev;
+        while(second != null){
+            if(first.val != second.val){
+                return false;
+            }
+            first = first.next;
+            second = second.next;
+        }
+        return true;
     }
 }
