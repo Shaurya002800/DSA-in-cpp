@@ -291,20 +291,88 @@ class ListNode {
 
 
 
+// class Solution {
+//     public ListNode deleteMiddle(ListNode head) {
+//         if(head == null || head.next == null) {
+//             return null;
+//         }
+//         ListNode slow = head;
+//         ListNode fast = head;
+//         ListNode prev = null;
+//         while(fast != null && fast.next != null) {
+//             prev = slow;
+//             slow = slow.next;
+//             fast = fast.next.next;
+//         }
+//         prev.next = slow.next;
+//         return head;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//SORT LIST
+
+// Given the head of a linked list, return the list after sorting it in ascending order.
+
+// Example 1:
+// Input: head = [4,2,1,3]
+// Output: [1,2,3,4]
+
+
+
 class Solution {
-    public ListNode deleteMiddle(ListNode head) {
+    public ListNode sortList(ListNode head) {
         if(head == null || head.next == null) {
-            return null;
+            return head;
         }
+        // Find middle
         ListNode slow = head;
-        ListNode fast = head;
-        ListNode prev = null;
+        ListNode fast = head.next;
         while(fast != null && fast.next != null) {
-            prev = slow;
             slow = slow.next;
             fast = fast.next.next;
         }
-        prev.next = slow.next;
-        return head;
+        ListNode mid = slow.next;
+        slow.next = null;
+        // Sort left and right halves
+        ListNode left = sortList(head);
+        ListNode right = sortList(mid);
+        // Merge sorted halves
+        return merge(left, right);
+    }
+    public ListNode merge(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        while(l1 != null && l2 != null) {
+            if(l1.val <= l2.val) {
+                tail.next = l1;
+                l1 = l1.next;
+            }
+            else {
+                tail.next = l2;
+                l2 = l2.next;
+            }
+            tail = tail.next;
+        }
+        if(l1 != null) {
+            tail.next = l1;
+        }
+        if(l2 != null) {
+            tail.next = l2;
+        }
+        return dummy.next;
     }
 }
