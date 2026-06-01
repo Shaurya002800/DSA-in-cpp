@@ -425,27 +425,99 @@ class ListNode {
  *     }
  * }
  */
+// class Solution {
+//     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+//         ListNode a = headA;
+//         ListNode b = headB;
+
+//         while(a != b) {
+
+//             if(a == null) {
+//                 a = headB;
+//             }
+//             else {
+//                 a = a.next;
+//             }
+
+//             if(b == null) {
+//                 b = headA;
+//             }
+//             else {
+//                 b = b.next;
+//             }
+//         }
+//         return a;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//REVERSE THE NODE IN THE K-TH GROUP
+// Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.
+// k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
+// You may not alter the values in the list's nodes, only nodes themselves may be changed.
+ 
+// Example 1:
+// Input: head = [1,2,3,4,5], k = 2
+// Output: [2,1,4,3,5]
+
+
 class Solution {
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        ListNode a = headA;
-        ListNode b = headB;
+    // Function to reverse nodes in groups of k
+    public ListNode reverseKGroup(ListNode head, int k) {
+        // Create a dummy node to handle edge cases
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
 
-        while(a != b) {
+        // Pointer to the tail of the last reversed group
+        ListNode groupPrev = dummy;
 
-            if(a == null) {
-                a = headB;
-            }
-            else {
-                a = a.next;
+        while (true) {
+            // Get the k-th node in the current group
+            ListNode kth = getKthNode(groupPrev, k);
+            if (kth == null) break;
+
+            // Store the next group’s head
+            ListNode groupNext = kth.next;
+
+            // Reverse the current k-group
+            ListNode prev = groupNext;
+            ListNode curr = groupPrev.next;
+
+            for (int i = 0; i < k; i++) {
+                ListNode temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
             }
 
-            if(b == null) {
-                b = headA;
-            }
-            else {
-                b = b.next;
-            }
+            // Connect the previous group to the reversed group
+            ListNode temp = groupPrev.next;
+            groupPrev.next = kth;
+            groupPrev = temp;
         }
-        return a;
+
+        // Return the new head
+        return dummy.next;
+    }
+
+    // Helper function to get the k-th node from the current node
+    private ListNode getKthNode(ListNode curr, int k) {
+        while (curr != null && k > 0) {
+            curr = curr.next;
+            k--;
+        }
+        return curr;
     }
 }
