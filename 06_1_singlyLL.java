@@ -473,51 +473,105 @@ class ListNode {
 // Output: [2,1,4,3,5]
 
 
+// class Solution {
+//     // Function to reverse nodes in groups of k
+//     public ListNode reverseKGroup(ListNode head, int k) {
+//         // Create a dummy node to handle edge cases
+//         ListNode dummy = new ListNode(0);
+//         dummy.next = head;
+
+//         // Pointer to the tail of the last reversed group
+//         ListNode groupPrev = dummy;
+
+//         while (true) {
+//             // Get the k-th node in the current group
+//             ListNode kth = getKthNode(groupPrev, k);
+//             if (kth == null) break;
+
+//             // Store the next group’s head
+//             ListNode groupNext = kth.next;
+
+//             // Reverse the current k-group
+//             ListNode prev = groupNext;
+//             ListNode curr = groupPrev.next;
+
+//             for (int i = 0; i < k; i++) {
+//                 ListNode temp = curr.next;
+//                 curr.next = prev;
+//                 prev = curr;
+//                 curr = temp;
+//             }
+
+//             // Connect the previous group to the reversed group
+//             ListNode temp = groupPrev.next;
+//             groupPrev.next = kth;
+//             groupPrev = temp;
+//         }
+
+//         // Return the new head
+//         return dummy.next;
+//     }
+
+//     // Helper function to get the k-th node from the current node
+//     private ListNode getKthNode(ListNode curr, int k) {
+//         while (curr != null && k > 0) {
+//             curr = curr.next;
+//             k--;
+//         }
+//         return curr;
+//     }
+// }
+
+
+
+
+
+
+
+
+//ROTATE THE LINKED LIST
+
+// Given the head of a linked list, rotate the list to the right by k places.
+
+
+// Example 1:
+// Input: head = [1,2,3,4,5], k = 2
+// Output: [4,5,1,2,3]
+
+
+
+
 class Solution {
-    // Function to reverse nodes in groups of k
-    public ListNode reverseKGroup(ListNode head, int k) {
-        // Create a dummy node to handle edge cases
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-
-        // Pointer to the tail of the last reversed group
-        ListNode groupPrev = dummy;
-
-        while (true) {
-            // Get the k-th node in the current group
-            ListNode kth = getKthNode(groupPrev, k);
-            if (kth == null) break;
-
-            // Store the next group’s head
-            ListNode groupNext = kth.next;
-
-            // Reverse the current k-group
-            ListNode prev = groupNext;
-            ListNode curr = groupPrev.next;
-
-            for (int i = 0; i < k; i++) {
-                ListNode temp = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = temp;
+    public ListNode rotateRight(ListNode head, int k) {
+        if(k == 0){
+            return head;
+        } else if(head == null){
+            return head;
+        } else if(head.next == null){
+            return head;
+        }
+        int n = 0;
+        ListNode temp = head;
+        while(temp != null){
+            n++;
+            temp = temp.next;
+        }
+        k %= n;
+        for(int i = 0; i < k; i++){
+            temp = head;
+            ListNode see = new ListNode(0);
+            while(temp.next != null){
+                if(temp.next.next == null){
+                    see.val = temp.next.val;
+                    see.next = head;
+                    head = see;
+                    temp.next = null;
+                }else{
+                    temp = temp.next;
+                }
             }
-
-            // Connect the previous group to the reversed group
-            ListNode temp = groupPrev.next;
-            groupPrev.next = kth;
-            groupPrev = temp;
         }
-
-        // Return the new head
-        return dummy.next;
-    }
-
-    // Helper function to get the k-th node from the current node
-    private ListNode getKthNode(ListNode curr, int k) {
-        while (curr != null && k > 0) {
-            curr = curr.next;
-            k--;
-        }
-        return curr;
+        temp = head;
+        return temp;
     }
 }
