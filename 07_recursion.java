@@ -23,35 +23,82 @@
 // Step 3: "42" ("42" is read in)
 
 
-class Solution {
-    public int myAtoi(String s) {
-        int i = 0;
-        int n = s.length();
-        // 1. Skip leading spaces
-        while(i < n && s.charAt(i) == ' ') {
-            i++;
+// class Solution {
+//     public int myAtoi(String s) {
+//         int i = 0;
+//         int n = s.length();
+//         // 1. Skip leading spaces
+//         while(i < n && s.charAt(i) == ' ') {
+//             i++;
+//         }
+//         // 2. Check sign
+//         int sign = 1;
+//         if(i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
+//             if(s.charAt(i) == '-') {
+//                 sign = -1;
+//             }
+//             i++;
+//         }
+//         // 3. Build number
+//         long num = 0;
+//         while(i < n && Character.isDigit(s.charAt(i))) {
+//             num = num * 10 + (s.charAt(i) - '0');
+//             // 4. Handle overflow
+//             if(sign * num > Integer.MAX_VALUE) {
+//                 return Integer.MAX_VALUE;
+//             }
+//             if(sign * num < Integer.MIN_VALUE) {
+//                 return Integer.MIN_VALUE;
+//             }
+//             i++;
+//         }
+//         return (int)(sign * num);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+//POW Implement pow(x, n), which calculates x raised to the power n (i.e., xn).
+
+// Example 1:
+
+// Input: x = 2.00000, n = 10
+// Output: 1024.00000
+// Example 2:
+
+// Input: x = 2.10000, n = 3
+// Output: 9.26100
+// Example 3:
+
+// Input: x = 2.00000, n = -2
+// Output: 0.25000
+// Explanation: 2-2 = 1/22 = 1/4 = 0.25
+
+
+
+ class Solution {
+    public double myPow(double x, int n) {
+        long N = n;
+        if(N < 0) {
+            x = 1 / x;
+            N = -N;
         }
-        // 2. Check sign
-        int sign = 1;
-        if(i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
-            if(s.charAt(i) == '-') {
-                sign = -1;
+        double ans = 1;
+        while(N > 0) {
+            if(N % 2 == 1) {
+                ans *= x;
             }
-            i++;
+            x *= x;
+            N /= 2;
         }
-        // 3. Build number
-        long num = 0;
-        while(i < n && Character.isDigit(s.charAt(i))) {
-            num = num * 10 + (s.charAt(i) - '0');
-            // 4. Handle overflow
-            if(sign * num > Integer.MAX_VALUE) {
-                return Integer.MAX_VALUE;
-            }
-            if(sign * num < Integer.MIN_VALUE) {
-                return Integer.MIN_VALUE;
-            }
-            i++;
-        }
-        return (int)(sign * num);
+        return ans;
     }
 }
