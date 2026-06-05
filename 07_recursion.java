@@ -1,3 +1,4 @@
+import java.util.*;
 //STRING TO INTEGER
 
 // Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.
@@ -134,23 +135,75 @@
 
 
 
+// class Solution {
+//     long MOD = 1000000007;
+//     public int countGoodNumbers(long n) {
+//         long even = (n + 1) / 2;
+//         long odd = n / 2;
+//         long ans = (power(5, even) * power(4, odd)) % MOD;
+//         return (int)ans;
+//     }
+//     public long power(long x, long n) {
+//         long ans = 1;
+//         while(n > 0) {
+//             if((n & 1) == 1) {
+//                 ans = (ans * x) % MOD;
+//             }
+//             x = (x * x) % MOD;
+//             n >>= 1;
+//         }
+//         return ans;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//GENERTE PARENTHESES
+
+// Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+// Example 1:
+// Input: n = 3
+// Output: ["((()))","(()())","(())()","()(())","()()()"]
+
+// Example 2:
+// Input: n = 1
+// Output: ["()"]
+
+
 class Solution {
-    long MOD = 1000000007;
-    public int countGoodNumbers(long n) {
-        long even = (n + 1) / 2;
-        long odd = n / 2;
-        long ans = (power(5, even) * power(4, odd)) % MOD;
-        return (int)ans;
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<>();
+        backtrack(new StringBuilder(), result, 0, 0, n);
+        return result;
     }
-    public long power(long x, long n) {
-        long ans = 1;
-        while(n > 0) {
-            if((n & 1) == 1) {
-                ans = (ans * x) % MOD;
-            }
-            x = (x * x) % MOD;
-            n >>= 1;
+
+    private void backtrack(StringBuilder current, List<String> result, int open, int close, int n) {
+        if (current.length() == (2 * n)) {
+            result.add(current.toString());
+            return;
         }
-        return ans;
+        if (open < n) {
+            current.append('(');
+            backtrack(current, result, open + 1, close, n);
+            current.deleteCharAt(current.length() - 1);
+        }
+        if (close < open) {
+            current.append(')');
+            backtrack(current, result, open, close + 1, n);
+            current.deleteCharAt(current.length() - 1);
+        }
     }
 }
