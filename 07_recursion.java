@@ -183,27 +183,76 @@ import java.util.*;
 // Output: ["()"]
 
 
-class Solution {
-    public List<String> generateParenthesis(int n) {
-        List<String> result = new ArrayList<>();
-        backtrack(new StringBuilder(), result, 0, 0, n);
-        return result;
-    }
+// class Solution {
+//     public List<String> generateParenthesis(int n) {
+//         List<String> result = new ArrayList<>();
+//         backtrack(new StringBuilder(), result, 0, 0, n);
+//         return result;
+//     }
 
-    private void backtrack(StringBuilder current, List<String> result, int open, int close, int n) {
-        if (current.length() == (2 * n)) {
-            result.add(current.toString());
+//     private void backtrack(StringBuilder current, List<String> result, int open, int close, int n) {
+//         if (current.length() == (2 * n)) {
+//             result.add(current.toString());
+//             return;
+//         }
+//         if (open < n) {
+//             current.append('(');
+//             backtrack(current, result, open + 1, close, n);
+//             current.deleteCharAt(current.length() - 1);
+//         }
+//         if (close < open) {
+//             current.append(')');
+//             backtrack(current, result, open, close + 1, n);
+//             current.deleteCharAt(current.length() - 1);
+//         }
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//COMBINATION SUM
+
+// Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+// The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+// The test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input. 
+
+// Example 1:
+// Input: candidates = [2,3,6,7], target = 7
+// Output: [[2,2,3],[7]]
+// Explanation:
+// 2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.
+// 7 is a candidate, and 7 = 7.
+// These are the only two combinations.
+
+class Solution {
+    List<List<Integer>> see = new ArrayList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<Integer> curr = new ArrayList<>();
+        Arrays.sort(candidates);
+        solve(candidates, target, 0, curr);
+        return see;
+    }
+    public void solve(int[] arr, int target, int st, List<Integer> curr){
+        if(target == 0){
+            see.add(new ArrayList(curr));
             return;
         }
-        if (open < n) {
-            current.append('(');
-            backtrack(current, result, open + 1, close, n);
-            current.deleteCharAt(current.length() - 1);
-        }
-        if (close < open) {
-            current.append(')');
-            backtrack(current, result, open, close + 1, n);
-            current.deleteCharAt(current.length() - 1);
+        for(int i = st; i < arr.length; i++){
+            if(arr[i] > target) break;
+            curr.add(arr[i]);
+            solve(arr, target - arr[i], i, curr);
+            curr.remove(curr.size() - 1);
         }
     }
 }
