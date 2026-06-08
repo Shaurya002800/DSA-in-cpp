@@ -235,23 +235,73 @@ import java.util.*;
 // 7 is a candidate, and 7 = 7.
 // These are the only two combinations.
 
+// class Solution {
+//     List<List<Integer>> see = new ArrayList<>();
+//     public List<List<Integer>> combinationSum(int[] candidates, int target) {
+//         List<Integer> curr = new ArrayList<>();
+//         Arrays.sort(candidates);
+//         solve(candidates, target, 0, curr);
+//         return see;
+//     }
+//     public void solve(int[] arr, int target, int st, List<Integer> curr){
+//         if(target == 0){
+//             see.add(new ArrayList(curr));
+//             return;
+//         }
+//         for(int i = st; i < arr.length; i++){
+//             if(arr[i] > target) break;
+//             curr.add(arr[i]);
+//             solve(arr, target - arr[i], i, curr);
+//             curr.remove(curr.size() - 1);
+//         }
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//SUBSETS 
+
+
+// Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
+// The solution set must not contain duplicate subsets. Return the solution in any order.
+
+// Example 1:
+// Input: nums = [1,2,2]
+// Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+
+// Example 2:
+// Input: nums = [0]
+// Output: [[],[0]]
+
+
+
 class Solution {
     List<List<Integer>> see = new ArrayList<>();
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<Integer> curr = new ArrayList<>();
-        Arrays.sort(candidates);
-        solve(candidates, target, 0, curr);
+        Arrays.sort(nums);
+        solve(nums, 0, curr);
         return see;
     }
-    public void solve(int[] arr, int target, int st, List<Integer> curr){
-        if(target == 0){
-            see.add(new ArrayList(curr));
-            return;
-        }
+    public void solve(int[] arr, int st, List<Integer> curr){
+        see.add(new ArrayList<>(curr));
+        
         for(int i = st; i < arr.length; i++){
-            if(arr[i] > target) break;
+            if(i > st && arr[i] == arr[i - 1]) continue;
             curr.add(arr[i]);
-            solve(arr, target - arr[i], i, curr);
+            solve(arr, i + 1, curr);
             curr.remove(curr.size() - 1);
         }
     }
