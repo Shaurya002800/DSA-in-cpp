@@ -287,22 +287,86 @@ import java.util.*;
 
 
 
+// class Solution {
+//     List<List<Integer>> see = new ArrayList<>();
+//     public List<List<Integer>> subsetsWithDup(int[] nums) {
+//         List<Integer> curr = new ArrayList<>();
+//         Arrays.sort(nums);
+//         solve(nums, 0, curr);
+//         return see;
+//     }
+//     public void solve(int[] arr, int st, List<Integer> curr){
+//         see.add(new ArrayList<>(curr));
+        
+//         for(int i = st; i < arr.length; i++){
+//             if(i > st && arr[i] == arr[i - 1]) continue;
+//             curr.add(arr[i]);
+//             solve(arr, i + 1, curr);
+//             curr.remove(curr.size() - 1);
+//         }
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//LETTER COMBINATIONS OF A PHONE NUMBER
+
+// Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+// A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+// Example 1:
+
+// Input: digits = "23"
+// Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+// Example 2:
+
+// Input: digits = "2"
+// Output: ["a","b","c"]
+
+
 class Solution {
-    List<List<Integer>> see = new ArrayList<>();
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        List<Integer> curr = new ArrayList<>();
-        Arrays.sort(nums);
-        solve(nums, 0, curr);
+    List<String> see = new ArrayList<>();
+    public List<String> letterCombinations(String digits) {
+        if(digits.length() == 0) return see;
+        char[][] temp = {
+            {'a', 'b', 'c'},
+            {'d', 'e', 'f'},
+            {'g', 'h', 'i'},
+            {'j', 'k', 'l'},
+            {'m', 'n', 'o'},
+            {'p', 'q', 'r', 's'},
+            {'t', 'u', 'v'},
+            {'w', 'x', 'y', 'z'}
+        };
+        solve(temp, 0, digits, "");
         return see;
     }
-    public void solve(int[] arr, int st, List<Integer> curr){
-        see.add(new ArrayList<>(curr));
-        
-        for(int i = st; i < arr.length; i++){
-            if(i > st && arr[i] == arr[i - 1]) continue;
-            curr.add(arr[i]);
-            solve(arr, i + 1, curr);
-            curr.remove(curr.size() - 1);
+    public void solve(char[][] arr, int st, String digits, String he) {
+        if(he.length() == digits.length()) {
+            see.add(he);
+            return;
+        }
+        int idx = digits.charAt(st) - '2';
+        for(int i = 0; i < arr[idx].length; i++) {
+            solve(
+                arr,
+                st + 1,
+                digits,
+                he + arr[idx][i]
+            );
         }
     }
 }
